@@ -1,38 +1,20 @@
-name: Reusable Workflow
+name: Reusable workflow example
 
 on:
   workflow_call:
     inputs:
-      working-directory:
-        description: Directory in which to run Terraform commands and operations
+      config-path:
+        required: true
         type: string
-        default: ${{ github.workspace }}
     secrets:
-      GH_TOKEN:
+      token:
         required: true
 
-permissions:
-  contents: read
-  id-token: write
-  pull-requests: write
-
-env:
-  TOKEN: ${{ secrets.PAT_GITHUB1 || '' }}
-
 jobs:
-  setup:
-    name: Setup
+  triage:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        id: checkout
-        with:
-          fetch-depth: 0
-
-      - name: Get secret
-        run: echo "The secret value is ${TOKEN}"
+    - uses: actions/labeler@v4
+      with:
+        repo-token: ${{ secrets.token }}
+        configuration-path: ${{ inputs.config-path }}
