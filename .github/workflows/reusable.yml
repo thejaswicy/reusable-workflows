@@ -25,8 +25,8 @@ jobs:
     name: Repository-Setup
     runs-on: ubuntu-latest
     outputs:
-      REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
-      TEMPLATE_REPO_NAME: ${{ env.TEMPLATE_REPO_NAME }}
+      REPOSITORY_NAME: ${{ steps.repo-names.outputs.REPOSITORY_NAME }}
+      TEMPLATE_REPO_NAME: ${{ steps.repo-names.outputs.TEMPLATE_REPO_NAME }}
     defaults:
       run:
         shell: bash
@@ -49,8 +49,11 @@ jobs:
         id: repo-names
         run: |
           echo '${{ steps.issue-parser.outputs.jsonString }}' > issue.json
-          echo "REPOSITORY_NAME=$(jq -r '.repo' issue.json)" >> $GITHUB_ENV
-          echo "TEMPLATE_REPO_NAME=$(jq -r '."template"' issue.json)" >> $GITHUB_ENV
+          echo "REPOSITORY_NAME=$(jq -r '.repo' issue.json)" >> $GITHUB_OUTPUT
+          echo "TEMPLATE_REPO_NAME=$(jq -r '."template"' issue.json)" >> $GITHUB_OUTPUT
+        env:
+          REPOSITORY_NAME: ${{ steps.repo-names.outputs.REPOSITORY_NAME }}
+          TEMPLATE_REPO_NAME: ${{ steps.repo-names.outputs.TEMPLATE_REPO_NAME }}
 
       - name: Check if repository exists
         id: check-repo
