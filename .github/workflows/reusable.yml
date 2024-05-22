@@ -15,17 +15,21 @@ on:
       GH_TOKEN:
         required: true
 
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  ISSUE_NUMBER: ${{ inputs.issue-number }}
+  REPO_OWNER: ${{ inputs.repo-owner }}
+
 jobs:
   setup:
-    name: Repository Setup
+    name: Repository-Setup
     runs-on: ubuntu-latest
+    outputs:
+      REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+      TEMPLATE_REPO_NAME: ${{ env.TEMPLATE_REPO_NAME }}
     defaults:
       run:
         shell: bash
-    env:
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      ISSUE_NUMBER: ${{ inputs.issue-number }}
-      REPO_OWNER: ${{ inputs.repo-owner }}
 
     if: ${{ github.event.issue.title == 'create {repository} repo, using template' }}
     steps:
@@ -66,6 +70,14 @@ jobs:
           gh issue edit ${{ env.ISSUE_NUMBER }} --title "chore: create ${REPOSITORY_NAME} repository, using ${TEMPLATE_REPO_NAME} repository"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+
+  create-repository:
+    needs: Repository-Setup
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
 
       - name: Create new repository
         run: |
