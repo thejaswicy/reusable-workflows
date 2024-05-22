@@ -51,7 +51,7 @@ jobs:
           echo '${{ steps.issue-parser.outputs.jsonString }}' > issue.json
           echo "REPOSITORY_NAME=$(jq -r '.repo' issue.json)" >> "$GITHUB_OUTPUT"
           echo "TEMPLATE_REPO_NAME=$(jq -r '."template"' issue.json)" >> "$GITHUB_OUTPUT"
-          echo "$GITHUB_OUTPUT"
+          echo "$REPOSITORY_NAME"
         env:
           REPOSITORY_NAME: ${{ steps.repo-names.outputs.REPOSITORY_NAME }}
           TEMPLATE_REPO_NAME: ${{ steps.repo-names.outputs.TEMPLATE_REPO_NAME }}
