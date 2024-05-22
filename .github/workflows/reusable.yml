@@ -18,9 +18,9 @@ jobs:
         repo-token: ${{ secrets.token }}
         configuration-path: ${{ inputs.config-path }}
 
-call-reusable2:
-  name: calling-reusable2-workflow
-  with:
-    repo-token: ${{ secrets.token }}
-  uses: ./github/workflows/reuable2.yml
+  call-reusable2:
+    name: calling-reusable2-workflow
+    with:
+      repo-token: ${{ secrets.token }}
+    uses: ./.github/workflows/reuable2.yml
 
