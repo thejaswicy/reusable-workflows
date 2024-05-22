@@ -22,5 +22,5 @@ jobs:
     name: calling-reusable2-workflow
     with:
       repo-token: ${{ secrets.token }}
-    uses: ./.github/workflows/reuable2.yml
+    uses: .github/workflows/reuable2.yml
 
