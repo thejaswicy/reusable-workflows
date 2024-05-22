@@ -13,15 +13,9 @@ jobs:
   triage:
     runs-on: ubuntu-latest
     steps:
-      uses: actions/labeler@v4
+    - uses: actions/labeler@v4
       with:
         repo-token: ${{ secrets.token }}
         configuration-path: ${{ inputs.config-path }}
 
-  call-reusable2:
-    name: calling-reusable2-workflow
-    needs: triage
-    with:
-      repo-token: ${{ secrets.token }}
-    uses: ./github/workflows/reuable2.yml
-
+  
