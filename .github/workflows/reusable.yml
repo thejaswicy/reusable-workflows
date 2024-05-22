@@ -92,3 +92,6 @@ jobs:
             "https://api.github.com/repos/${REPO_OWNER}/${TEMPLATE_REPO_NAME}/generate" \
             -d "{\"owner\":\"${REPO_OWNER}\",\"name\":\"${REPOSITORY_NAME}\",\"include_all_branches\":false,\"private\":false}")
           echo "Created repository ${REPOSITORY_NAME} in ${REPO_OWNER}"
+        env:
+          REPOSITORY_NAME: ${{ needs.setup.outputs.REPOSITORY_NAME }}
+          TEMPLATE_REPO_NAME: ${{ needs.setup.outputs.TEMPLATE_REPO_NAME }}
