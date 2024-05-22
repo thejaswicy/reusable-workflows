@@ -72,7 +72,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
 
   create-repository:
-    needs: Repository-Setup
+    needs: setup
     runs-on: ubuntu-latest
     defaults:
       run:
